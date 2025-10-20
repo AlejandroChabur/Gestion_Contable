@@ -11,6 +11,8 @@ services:
     working_dir: /var/www/html
     volumes:
       - .:/var/www/html
+    expose:
+      - 9000   # 👈 agrega esto para que Nginx pueda comunicarse con PHP-FPM
     depends_on:
       - mysql_db
 
@@ -24,7 +26,7 @@ services:
       MYSQL_PASSWORD: laravel
       MYSQL_ROOT_PASSWORD: root
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
 
@@ -47,9 +49,9 @@ services:
     ports:
       - "8081:80"
     environment:
-        PMA_HOST: mysql_db
-        PMA_USER: root
-        PMA_PASSWORD: root
+      PMA_HOST: mysql_db
+      PMA_USER: root
+      PMA_PASSWORD: root
     depends_on:
       - mysql_db
 
